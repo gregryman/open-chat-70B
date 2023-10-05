@@ -29,6 +29,10 @@ n_ctx=4096
 
 # Define batch size
 n_batch=2096
+
+# Needed for 70B file
+n_gpa=8
+
 # If total RAM is less than 8GB, set batch size to 1024
 total_ram=$(cat /proc/meminfo | grep MemTotal | awk '{print $2}')
 if [ $total_ram -lt 8000000 ]; then
@@ -44,4 +48,4 @@ echo "Context window: $n_ctx"
 npm start &
 
 # Start the second process
-exec python3 -m llama_cpp.server --n_ctx $n_ctx --n_threads $n_threads --n_batch $n_batch
+exec python3 -m llama_cpp.server --n_ctx $n_ctx --n_threads $n_threads --n_batch $n_batch -gqa 8
